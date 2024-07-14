@@ -1,5 +1,7 @@
 # Aegis
 
+![rag](https://github.com/user-attachments/assets/b29d3a5a-87cb-42fa-8296-a547343a4958)
+
 A simple Retrieval-Augmented Generation (RAG) system built with Django, Celery, and PostgreSQL as a vector database. This system allows you to upload documents which are indexed using Celery workers. You can then interact with your documents via a chat interface using the OpenAI API.
 
 ## Features
