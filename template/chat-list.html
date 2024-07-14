@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat History</title>
+    <!-- Link to the Tailwind CSS stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4">
+
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-semibold">Chat History</h1>
+            <a href="{%url 'chatbot-list-create' %}" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Chatbots</a>
+
+        </div>
+
+    </header>
+    <!-- Chat List -->
+    <div class="container mx-auto p-4 mt-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Your Chats</h2>
+            <div class="search-box">
+                <input type="text" placeholder="Search chats" id="searchInput" class="p-2 border rounded">
+                <button onclick="redirectToSearchResults()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Search</button>
+            </div>
+        </div>
+        <!-- List of Previous Chats -->
+        <ul class="chat-list">
+        {% for chat in user_chats %}
+        <li class="chat-item border rounded p-2 mb-4 hover:bg-gray-100">
+            <a href="{% url 'chat-details' chat.uuid %}" class="chat-link flex items-center">
+                <div class="chat-avatar" style="width:60px;height:60px;">
+                    <img src="{{ chat.avatar_url }}" alt="{{ chat.name }}">
+                </div>
+                <div class="chat-details">
+                    <h3 class="chat-title">Chat Title: {{ chat.title }}</h3>
+                    <p class="chat-preview">Chatbot: {{ chat.chatbot.name }}</p>
+                    <p class="chat-date">Date of last message: {{ chat.timestamp }}</p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+        </ul>
+
+        <!-- Pagination -->
+        <div class="flex justify-between items-center mt-8">
+            <span class="text-gray-600">
+                {% if user_chats.has_previous %}
+                    <a href="?page=1" class="mr-2">first</a>
+                    <a href="?page={{ chatbots.previous_page_number }}" class="mr-2">previous</a>
+                {% endif %}
+
+                {% if user_chats.has_next %}
+                    <a href="?page={{ chatbots.next_page_number }}" class="mr-2">next</a>
+                    <a href="?page={{ chatbots.paginator.num_pages }}">last</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+   <footer>
+    <div class="container mx-auto flex items-center justify-between">
+        <!-- Select Chatbot Dropdown -->
+
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold mb-4">Start a New Chat:</h2>
+            <form method="POST" action="{% url 'chat-list' %}" class="max-w-md">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="chatbot-select" class="block text-sm font-semibold mb-2">Select ChatBot:</label>
+                    <select id="chatbot-select" name="chatbot" class="p-2 border rounded bg-white text-black-800">
+                        <!-- Populate with user's chatbots -->
+                        {% for chatbot in user_chatbots %}
+                            <option value="{{ chatbot.uuid }}">{{ chatbot.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Add more fields as needed -->
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Start Chat</button>
+            </form>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
+<script>
+    function redirectToSearchResults() {
+        // Get the value from the search input
+        var searchQuery = document.getElementById('searchInput').value;
+
+        // Redirect to the search_results page with the search query as a parameter
+        window.location.href = "{%url 'search_results'%}"+'?q=' + encodeURIComponent(searchQuery);
+    }
+</script>
+
+
+

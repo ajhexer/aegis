@@ -1,0 +1,23 @@
+<!-- templates/yourapp/chatbot_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chatbot.name }} Details</title>
+    <!-- Link to the Tailwind CSS stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-4">
+    <header class="bg-gray-800 text-white p-4">
+
+        <div class="flex justify-between items-center mb-4">
+            <a href="{%url 'chatbot-list-create' %}" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Chatbots</a>
+            <a href="{%url 'chat-list' %}" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Chats</a>
+        </div>
+
+    </header>
+
+</body>
+</html>
+
