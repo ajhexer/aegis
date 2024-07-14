@@ -22,7 +22,7 @@ A simple Retrieval-Augmented Generation (RAG) system built with Django, Celery, 
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/username/interview-chatbot.git
+    git clone https://github.com/ajhexer/aegis.git
     cd interview-chatbot
     ```
 
